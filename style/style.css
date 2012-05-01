@@ -1,0 +1,26 @@
+#player{
+	width: 100%;
+	background-color: #000000;
+}
+
+#canvas-container{
+	width: 50%;
+	margin: 0 auto;
+	position: relative;
+}
+
+canvas {
+	/*background-color: #000000;*/
+	
+	border: 1px solid white;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.playing-point {
+	position: absolute;
+	height: 18px;
+	width: 18px;
+	border: 1px solid yellow;
+}
