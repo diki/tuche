@@ -9,6 +9,23 @@ var PlayPoint = Backbone.Model.extend({
 	},
 	
 	initialize: function(){
+	},
+	
+	calculateDistance : function(){
+		var total = 0;
+		var path = this.get("path");
+
+		var it = _.each(path, function(el, idx, arr){
+			
+			if(idx==arr.length-1){
+				return;;
+			}
+			var r = vectorDistance(el, arr[idx+1]);
+			total = total + r;
+		});
+
+		this.set("distance", total);
+
 	}
 	
 });

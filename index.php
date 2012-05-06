@@ -18,14 +18,15 @@
     <meta name="author" content="">
     
 	<base href="<?=HTTP_URL?>" />
-    <!-- Le styles -->
+    <!-- Le styles 
     <link href="style/bootstrap/css/bootstrap.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
     </style>
-    <link href="style/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="style/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">-->
+    <link href="style/normalize.css" rel="stylesheet">
     <link href="style/style.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -43,7 +44,7 @@
 
   <body>
 
-    <div class="navbar navbar-fixed-top">
+    <!--<div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -57,14 +58,14 @@
               <li><a href="">shit</a></li>
               <li><a href="">happens</a></li>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div></.nav-collapse 
         </div>
       </div>
-    </div>
+    </div>-->
     
     <div id="player">
 	    <div id="canvas-container">
-
+			
 		</div>
     </div>
 
@@ -126,6 +127,7 @@
 	
 	</script> -->
 	<script src="js/init.js"></script>
+	<script src="js/CurveAnimator.js"></script>
     <script src="js/model/PlayPointModel.js<?=('?ver='.VERSION)?>"></script>
     
     <script src="js/PlaypointCollection.js"></script>

@@ -1,10 +1,19 @@
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box; 
+    *behavior: url(js/lib/boxsizing.htc);
+}
+
 #player{
 	width: 100%;
 	background-color: #000000;
 }
 
 #canvas-container{
-	width: 50%;
+	padding-left: 5%;
+	padding-top: 40px;
+	width: 100%;
 	margin: 0 auto;
 	position: relative;
 }

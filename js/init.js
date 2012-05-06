@@ -10,3 +10,8 @@ function vector(x,y){
 	this.x = x;
 	this.y = y;
 }
+
+function vectorDistance(v1,v2){
+	var r = (v2.y-v1.y) * (v2.y-v1.y) + (v2.x-v1.x) * (v2.x-v1.x);
+	return Math.sqrt(r);
+}
