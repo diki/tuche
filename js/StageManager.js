@@ -104,7 +104,7 @@ var StageManager = Backbone.Collection.extend({
 		var currentPoint = new vector(vx,vy);
 		var startPoint = new vector(vx,vy);
 		
-		for(var i=0; i<4; i++){
+		for(var i=0; i<3; i++){
 
 			var cp = 0;
 			var centerId = 0;
@@ -296,7 +296,7 @@ var StageManager = Backbone.Collection.extend({
           			//r.setAlpha(0);
           			current++;
           			
-          			if(current==Math.floor(l*3/4)){
+          			if(current==l-1){
           				self.stage.stop();
           				//console.log("stage ok");
           				self.drawingAnimation = false;
@@ -347,7 +347,7 @@ var StageManager = Backbone.Collection.extend({
 				self.layer.draw();
 			}else{
 				self.layer.setAlpha(0);
-				self.StageManager.stop();
+				self.stage.stop();
 			}		
 
 		});
