@@ -95,7 +95,7 @@ var StageManager = Backbone.Collection.extend({
 		
 		var wx = Math.floor((dx/50)*10);
 		var hx = Math.floor((dy/40)*8);
-		var vx = dx/2-wx;
+		var vx = dx/2-wx/2;
 		var vy = dy/2 - hx/2;
 		
 		var diagonalLength = Math.floor(Math.sqrt(wx*wx+hx*hx));
