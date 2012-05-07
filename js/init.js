@@ -15,3 +15,7 @@ function vectorDistance(v1,v2){
 	var r = (v2.y-v1.y) * (v2.y-v1.y) + (v2.x-v1.x) * (v2.x-v1.x);
 	return Math.sqrt(r);
 }
+
+function randomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

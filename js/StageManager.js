@@ -56,7 +56,8 @@ var StageManager = Backbone.Collection.extend({
           y: 0,
           width: dx,
           height: dy,
-          fill: "rgba(255, 255, 255, 1)"
+          fill: "rgba(255, 255, 255, 0.5)",
+          alpha: 0.5
           //fill: grd
           //stroke: "white",
           //strokeWidth: 4
@@ -87,23 +88,15 @@ var StageManager = Backbone.Collection.extend({
 		
 		
 		 
-        var rect = new Kinetic.Rect({
-		  x: vx,
-		  y: vy,
-		  width: wx,
-		  height: hx,
-		  fill: "rgba(0, 255, 255, 1)",
-		  stroke: "pink"
-		  //id: "rect_"+j
-		});
 		backgroundLayer.add(rect);
 		
 		var lastRectIndex = 0;
-		var vx = dx/2;
-		var vy = dy/2;
+
 		
-		var wx = Math.floor((dx/50)*6);
+		var wx = Math.floor((dx/50)*10);
 		var hx = Math.floor((dy/40)*8);
+		var vx = dx/2-wx;
+		var vy = dy/2 - hx/2;
 		
 		var diagonalLength = Math.floor(Math.sqrt(wx*wx+hx*hx));
 		
@@ -111,7 +104,7 @@ var StageManager = Backbone.Collection.extend({
 		var currentPoint = new vector(vx,vy);
 		var startPoint = new vector(vx,vy);
 		
-		for(var i=0; i<6; i++){
+		for(var i=0; i<4; i++){
 
 			var cp = 0;
 			var centerId = 0;
@@ -133,9 +126,10 @@ var StageManager = Backbone.Collection.extend({
 				  y: currentPoint.y,
 				  width: wx,
 				  height: hx,
-				  fill: "rgba(0, 0, 255, 1)",
-				  stroke: "pink",
-				  id: "rect_"+lastRectIndex
+				  fill: "rgba(0, 0, 0, 1)",
+				  stroke: "white",
+				  id: "rect_"+lastRectIndex,
+				  alpha: 0
 				});
 				
 				
@@ -151,7 +145,7 @@ var StageManager = Backbone.Collection.extend({
 		        });
 		        
 				backgroundLayer.add(rect);
-				backgroundLayer.add(simpleText);
+				//backgroundLayer.add(simpleText);
 			}
 			
 			
@@ -164,9 +158,10 @@ var StageManager = Backbone.Collection.extend({
 				  y: currentPoint.y,
 				  width: wx,
 				  height: hx,
-				  fill: "rgba(0, 0, 255, 1)",
-				  stroke: "pink",
-				  id: "rect_"+lastRectIndex
+				  fill: "rgba(0, 0, 0, 1)",
+				  stroke: "white",
+				  id: "rect_"+lastRectIndex,
+				  alpha: 0
 				});
 				
 				
@@ -182,7 +177,7 @@ var StageManager = Backbone.Collection.extend({
 		        });
 		        
 				backgroundLayer.add(rect);
-				backgroundLayer.add(simpleText);
+				//backgroundLayer.add(simpleText);
 			}
 			
 			//go to bottom
@@ -194,9 +189,10 @@ var StageManager = Backbone.Collection.extend({
 				  y: currentPoint.y,
 				  width: wx,
 				  height: hx,
-				  fill: "rgba(0, 0, 255, 1)",
-				  stroke: "pink",
-				  id: "rect_"+lastRectIndex
+				  fill: "rgba(0, 0, 0, 1)",
+				  stroke: "white",
+				  id: "rect_"+lastRectIndex,
+				  alpha: 0
 				});
 				
 				
@@ -212,7 +208,7 @@ var StageManager = Backbone.Collection.extend({
 		        });
 		        
 				backgroundLayer.add(rect);
-				backgroundLayer.add(simpleText);
+				//backgroundLayer.add(simpleText);
 			}
 			
 			//go to right
@@ -224,9 +220,10 @@ var StageManager = Backbone.Collection.extend({
 				  y: currentPoint.y,
 				  width: wx,
 				  height: hx,
-				  fill: "rgba(0, 0, 255, 1)",
-				  stroke: "pink",
-				  id: "rect_"+lastRectIndex
+				  fill: "rgba(0, 0, 0, 1)",
+				  stroke: "white",
+				  id: "rect_"+lastRectIndex,
+				  alpha: 0
 				});
 				
 				
@@ -242,7 +239,7 @@ var StageManager = Backbone.Collection.extend({
 		        });
 		        
 				backgroundLayer.add(rect);
-				backgroundLayer.add(simpleText);
+				//backgroundLayer.add(simpleText);
 			}
 
 						
@@ -271,23 +268,91 @@ var StageManager = Backbone.Collection.extend({
 	animateBackground: function(){
 		var idx = 1;
 		var self = this;
-		var l = self.layer.children.length;
-		console.log(l);
-		var i = setInterval(function(){
-			var rect = self.layer.get("#rect_"+idx)[0];
-			console.log(rect.getAlpha(), idx);
-			idx++;
-			/*while(rect.getAlpha()>0){
-				rect.setAlpha(rect.getAlpha()-0.1);
-			}*/
+		var rects = self.layer.children;
+		
+        var amplitude = 150;
+        var period = 2000;
+        var l = rects.length;
+        var centerX = self.stage.getWidth() / 2;
+        
+        var current = 1;
+        
+        this.drawingAnimation = true;
+        if(this.drawingAnimation == true){
+        
+        this.stage.onFrame(function(frame) {
+        	var rect = self.layer.get("#rect_"+current);
+        	if(rect.length>0){
+        		var r = rect[0];
+        		var x = Math.sin(frame.time * Math.PI / period);
+        		
+        		r.setAlpha(r.getAlpha()+0.2);
+        		
+        		
+          		if(r.getAlpha()>1){
+          			//current++;
+          			//self.stage.stop();
+          			//;
+          			//r.setAlpha(0);
+          			current++;
+          			
+          			if(current==Math.floor(l*3/4)){
+          				self.stage.stop();
+          				//console.log("stage ok");
+          				self.drawingAnimation = false;
+          				self.layerAnim();
+          				//self.layer.setAlpha(self.layer.getAlpha()-0.01);
+          				/*_.each(rects, function(el){
+          					el.setStroke("black");
+          				});*/
+          				
+          				//self.layer.draw();
+          			}
+          			
+          			//
+          		}
+          		
+          		self.layer.draw();
+        		//r.rotate(Math.PI / 100);
+        		/*var x = Math.sin(frame.time * Math.PI / period);
+        		if(x<0){
+        			x=x*(-1);
+        		}
+        		r.setAlpha(x);
+        		
+        		
+        		
+          		self.layer.draw();
+          		
+          		if(r.getAlpha()<0.1){
+          			//self.stage.stop();
+          			current++;
+          		}*/
+          		console.log(r.getAlpha());
+          		
+          		///
+        	}
+        });
+        }
+        this.stage.start();
+	},
+	
+	layerAnim: function(){
+		//console.log("layter anim");
+		var self = this;
+		self.stage.onFrame(function(){
 			
-			rect.setAlpha(0);
-			if(idx==(l/2)-1){
-				clearInterval(i);
-			}
-			
-			self.layer.draw();
-		}, 10);
+			if(self.layer.getAlpha()>=0.01){
+				self.layer.setAlpha(self.layer.getAlpha()-0.01);
+				self.layer.draw();
+			}else{
+				self.layer.setAlpha(0);
+				self.StageManager.stop();
+			}		
+
+		});
+		
+		this.stage.start();
 	}
 	
 
