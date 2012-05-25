@@ -21,7 +21,8 @@ var PlayerPointsManager = Backbone.View.extend({
 	},
 	
 	drawPlayerPoints: function(){
-		        
+		
+		console.log("drawig");    
         var self = this;
         var stage = this.stage;
         
@@ -31,7 +32,16 @@ var PlayerPointsManager = Backbone.View.extend({
 		var openingLayer = new Kinetic.Layer();
 		var messageLayer = new Kinetic.Layer();
 		
-		var ctx = openingLayer.getCanvas().getContext("2d");
+		var context = openingLayer.getContext();
+		
+		context.strokeStyle = "#FF0000";
+		context.fillStyle = "#FFFF00";
+		context.beginPath();
+		context.arc(100,100,50,0,Math.PI*2,true);
+		context.closePath();
+		context.stroke();
+		context.fill();
+		
 		/**
 		 *collection object holds playPointModels 
 		 */
@@ -56,8 +66,8 @@ var PlayerPointsManager = Backbone.View.extend({
 				stroke: "#7dc0da"
 			});
 			
-			ctx.globalCompositeOperation = "lighter";
-			
+			context.globalCompositeOperation = "lighter";
+	        
 			var outerCircle = new Kinetic.Circle({
 				x: cx,
 				y: cy,
@@ -91,25 +101,25 @@ var PlayerPointsManager = Backbone.View.extend({
 			
 			//playing line of this point
 			var line = self.playerLinesLayer.get("#" + el.id+"_line");
-			circle.on("mouseout", function() {
-
-	        });
-	
+			//player points click events
+			
+			circle.on("mouseover", function(){
+				self.writePlayingPointsMessageLayer(el.get("artist") + " -- " + el.get("song"));
+			});
 	        circle.on("click", function() {
 				
+				//some model data, song data will be handled here
+				
+				//delegating point,line and sound relation to other method
+				//playSoundWithAnimation(el.id);
+				
+				//layer drawn here now load sounds with soundManager
+				smView.animatePlayingSound(el, stage, circle);
 				if(line.length>0){
 					var l = line[0];
 					
 					if(l.attrs.alpha>=0.7){
-						/*var ii = setInterval(function(){
-							l.attrs.alpha = l.attrs.alpha - (1/10);
-							if(l.attrs.alpha<0.3){
-								l.attrs.alpha = 0.3;
-								clearInterval(ii);
-							}
-							l.attrs.stroke = "#7dc0da";
-							self.playerLinesLayer.draw();
-						}, 50);*/
+
 						
 					} else {
 						var ii2 = setInterval(function(){
@@ -126,20 +136,42 @@ var PlayerPointsManager = Backbone.View.extend({
 				} else {
 					
 				}
-				
-	        	self.writePlayingPointsMessageLayer(el.get("artist"));
+	        	
 				self.selectedPlayingPoint = this;
 				self.selectedPlayingPointModel = el;
 	        });
 		});
-		
-		
+	 	var redLine = new Kinetic.Line({
+          points: [{x:73, y:70}, {x:340, y:23}],
+          stroke: "red",
+          strokeWidth: 15,
+          lineCap: "round",
+          lineJoin: "round"
+        });
+        
+        var blueRect = new Kinetic.Rect({
+          x: 50,
+          y: 75,
+          width: 100,
+          height: 50,
+          fill: "#00D2FF",
+          stroke: "black",
+          strokeWidth: 4
+        });
+        
+        
+        openingLayer.add(redLine);
+        openingLayer.add(blueRect);
+        
+        openingLayer.add(redLine);
+        //openingLayer.draw();
+		//openingLayer.setAlpha(0);
         stage.add(messageLayer);
 		stage.add(openingLayer);
 		
 		this.layer = openingLayer;
         this.messageLayer = messageLayer;
-
+        
 	},
 	
 	/**

@@ -39,12 +39,14 @@ var PlayerLinesManager = Backbone.View.extend({
 					}
 				});
 				var l = self.drawKineticLine(points, el.id);
+		      
 				linesStage.add(l);
 			}
 		});
 		
 		//make managers layer accesible from outside
 		this.layer = linesStage;
+		//this.layer.setAlpha(0);
 		self.stage.add(linesStage);
 	},
 	
@@ -54,7 +56,8 @@ var PlayerLinesManager = Backbone.View.extend({
 	
 	drawKineticLine: function(points, modelId){
         var layer = new Kinetic.Layer();
-
+		
+		console.log(points);
         var line = new Kinetic.Line({
           points: points,
           stroke: "white",
@@ -62,7 +65,7 @@ var PlayerLinesManager = Backbone.View.extend({
           lineCap: 'round',
           lineJoin: 'round',
           id: modelId+"_line",
-          alpha: 0
+          alpha: 1
         });
         return line;
 	},

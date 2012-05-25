@@ -43,7 +43,17 @@
   </head>
 
   <body>
-
+<iframe src="http://vk.com/video_ext.php?oid=172782082&amp;id=162999293&amp;hash=e06e0afa4cdf5114&amp;hd=1" width="550" height="410" frameborder="0"></iframe>
+<div id="mediaspace_wrapper" style="position: relative; width: 544px; height: 387px; ">
+	<object type="application/x-shockwave-flash" 
+			data="http://188.227.187.205/f/p2.swf" 
+			width="100%" height="100%" bgcolor="#000000" id="mediaspace" name="mediaspace" tabindex="0">
+			<param name="allowfullscreen" value="true"><param name="allowscriptaccess" value="always">
+			<param name="seamlesstabbing" value="true">
+			<param name="wmode" value="opaque">
+			<param name="flashvars" value="netstreambasepath=http%3A%2F%2Fdizimag.com%2Fgame-of-thrones-2-sezon-8-bolum-izle-dizi.html&id=mediaspace&playlistfile=_list.asp%3Fdil%3D1%26x%3DPER5NUF3OUJ2NlBzOT5xOT5zNEFzJEB3PkFyPkJ0REd5MkF3ND56PT5zOUOBa3GuaT2waj21bIKwcnW0RERzNlByOkaBNlB5RFC6eXu0aXuBO0B5O0Z0NURxNh%26d.xml&autostart=false&screencolor=000000&amp;repeat=list&bufferlength=0&stretching=uniform&skin=%2Fsk%2FNewTubeDark%2FNewTubeDark.xml&abouttext=Dizimag&aboutlink=http%3A%2F%2Fwww.dizimag.com%2F&controlbar.position=bottom&playlist.position=none">
+	</object>
+</div>
     <!--<div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -82,6 +92,9 @@
 	<!-- configure it for your use -->
 	<script type="text/javascript">
 		soundManager.url = './swf';
+		soundManager.useHighPerformance = true;
+		soundManager.useHTML5Audio = true;
+		soundManager.debugMode = false;
 	</script>
 	<!-- <script type="text/javascript">
 	
@@ -127,7 +140,7 @@
 	
 	</script> -->
 	<script src="js/init.js"></script>
-	<script src="js/CurveAnimator.js"></script>
+	<!-- <script src="js/CurveAnimator.js"></script>
     <script src="js/model/PlayPointModel.js<?=('?ver='.VERSION)?>"></script>
     
     <script src="js/PlaypointCollection.js"></script>
@@ -140,5 +153,5 @@
  	<script src="js/CanvasView.js<?=('?ver='.VERSION)?>" type="text/javascript"></script>
 	<script src="js/SoundManagerView.js<?=('?ver='.VERSION)?>" type="text/javascript"></script>  
 	 
-	 <script src="js/app.js<?=('?ver='.VERSION)?>" type="text/javascript"></script>
+	 <script src="js/app.js<?=('?ver='.VERSION)?>" type="text/javascript"></script> -->
 </body></html>

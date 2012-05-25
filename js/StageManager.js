@@ -4,9 +4,9 @@ var StageManager = Backbone.Collection.extend({
 		console.log("stage manager initialized",options);
 		this.renderStage();
 		
-		this.createBackgroundColor();
+		//this.createBackgroundColor();
 		
-		this.animateBackground();
+		//this.animateBackground();
 	},
 	/*
 	 * create kinetic stage element 
@@ -56,8 +56,8 @@ var StageManager = Backbone.Collection.extend({
           y: 0,
           width: dx,
           height: dy,
-          fill: "rgba(255, 255, 255, 0.5)",
-          alpha: 0.5
+          fill: "rgba(255, 255, 255, 1)"
+          //alpha: 0.5
           //fill: grd
           //stroke: "white",
           //strokeWidth: 4
@@ -66,10 +66,8 @@ var StageManager = Backbone.Collection.extend({
         //var ctx = document.querySelector('canvas').getContext('2d');
 		
 		        
-       	backgroundLayer.add(rect);
+       	//backgroundLayer.add(rect);
         
-        var curve = new CurveAnimator([750, 300], [450, 100], [880, 880],[550, 200], [350, 200]);
-		
 		function sqr(x1){
 			return x1*x1;
 		}
@@ -247,19 +245,7 @@ var StageManager = Backbone.Collection.extend({
 		
 		this.layer = backgroundLayer;
 		this.stage.add(backgroundLayer);
-		/*var st = [740, 290];
-		curve.animate(5, function(point, angle) {
-		    // Erase the canvas
-		    ctx.save();
-		    //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-		    //ctx.fillRect(point.x-10, point.y-10, 20, 20);
-		    ctx.moveTo(st[0], st[1]);
-		    ctx.lineTo(point.x-10, point.y-10);
-		    ctx.strokeStyle = "blue";
-		    ctx.stroke();
-		    st = [point.x-10,point.y-10 ]
-		    ctx.restore();
-		});*/
+
 	},
 	getStage: function(){
 		return this.stage;
@@ -290,47 +276,20 @@ var StageManager = Backbone.Collection.extend({
         		
         		
           		if(r.getAlpha()>1){
-          			//current++;
-          			//self.stage.stop();
-          			//;
-          			//r.setAlpha(0);
           			current++;
           			
           			if(current==l-1){
           				self.stage.stop();
-          				//console.log("stage ok");
           				self.drawingAnimation = false;
-          				self.layerAnim();
-          				//self.layer.setAlpha(self.layer.getAlpha()-0.01);
-          				/*_.each(rects, function(el){
-          					el.setStroke("black");
-          				});*/
           				
-          				//self.layer.draw();
+          				//layerAnim function draws playing points and lines
+          				self.layerAnim();
           			}
           			
           			//
           		}
           		
           		self.layer.draw();
-        		//r.rotate(Math.PI / 100);
-        		/*var x = Math.sin(frame.time * Math.PI / period);
-        		if(x<0){
-        			x=x*(-1);
-        		}
-        		r.setAlpha(x);
-        		
-        		
-        		
-          		self.layer.draw();
-          		
-          		if(r.getAlpha()<0.1){
-          			//self.stage.stop();
-          			current++;
-          		}*/
-          		console.log(r.getAlpha());
-          		
-          		///
         	}
         });
         }
@@ -340,18 +299,52 @@ var StageManager = Backbone.Collection.extend({
 	layerAnim: function(){
 		//console.log("layter anim");
 		var self = this;
+				
+		window.playerLinesManager = new PlayerLinesManager({collection: pc, stageManager: self});
+	
+		window.playerPointsManager = new PlayerPointsManager({
+			collection: pc, 
+			stageManager: self,
+			playerLinesManager: playerLinesManager
+		});
+		
+		var ly = playerPointsManager.getLayer();
 		self.stage.onFrame(function(){
-			
-			if(self.layer.getAlpha()>=0.01){
+			//ly.setAlpha(1);
+			ly.draw();
+			if(self.layer.getAlpha()>=0.05){
 				self.layer.setAlpha(self.layer.getAlpha()-0.01);
+				ly.setAlpha(ly.getAlpha()+0.005);
 				self.layer.draw();
 			}else{
 				self.layer.setAlpha(0);
+				self.layer.draw();
+				
+				ly.setAlpha(1);
 				self.stage.stop();
+				//self.animatePointsLayer();
 			}		
 
 		});
-		
+		this.stage.start();
+	},
+	animatePointsLayer: function(){
+		var self = this;
+		var ly = playerLinesManager.getLayer();
+		self.stage.onFrame(function(){
+			
+			if(ly.getAlpha()<=1){
+			console.log("sadasdasd", ly.getAlpha());
+				ly.setAlpha(ly.getAlpha()+0.01);
+				ly.draw();
+			}else{
+				ly.setAlpha(1);
+				ly.draw();
+				self.stage.stop();
+				//self.animatePointsLayer();
+			}		
+
+		});
 		this.stage.start();
 	}
 	

@@ -4,14 +4,14 @@ var PlayPoint = Backbone.Model.extend({
 	
 	defaults: {
 		songName: "Default",
-		artist: "Kesha",
-		source: "http://muteam.fm/dl/Ott%20-%20Mir%20(2011)/04.%20Squirrel%20And%20Biscuits.mp3"
+		artist: "Kesha"
+		//source: "http://muteam.fm/dl/Ott%20-%20Mir%20(2011)/04.%20Squirrel%20And%20Biscuits.mp3"
 	},
 	
 	initialize: function(){
 	},
 	
-	calculateDistance : function(){
+	calculateDistance : function(cx,cy){
 		var total = 0;
 		var path = this.get("path");
 
@@ -20,11 +20,13 @@ var PlayPoint = Backbone.Model.extend({
 			if(idx==arr.length-1){
 				return;;
 			}
-			var r = vectorDistance(el, arr[idx+1]);
+			var r = vectorDistance(el, arr[idx+1], cx,cy);
 			total = total + r;
 		});
-
-		this.set("distance", total);
+		total = Math.ceil(total);
+		this.set("lineLength", total);
+		
+		return total;
 
 	}
 	
